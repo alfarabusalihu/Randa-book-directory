@@ -1,9 +1,9 @@
-package apifunctions
+package handlers
 
 import (
 	"net/http"
-	fileReader "randa/book-directory/book-data"
 	"randa/book-directory/interfaces"
+	"randa/book-directory/storage"
 
 	"github.com/gin-gonic/gin"
 )
@@ -11,7 +11,7 @@ import (
 func UpdateBookById(c *gin.Context) {
 	id := c.Param("BookID")
 
-	for i, x := range fileReader.Books {
+	for i, x := range storage.Books {
 		if x.BookID == id {
 			var updatedBook interfaces.BookType
 			if err := c.BindJSON(&updatedBook); err != nil {
@@ -50,7 +50,7 @@ func UpdateBookById(c *gin.Context) {
 				x.Quantity = updatedBook.Quantity
 			}
 
-			fileReader.Books[i] = x
+			storage.Books[i] = x
 			c.IndentedJSON(http.StatusOK, gin.H{
 				"message": "Book updated successfully",
 				"book":    x,

@@ -1,9 +1,9 @@
-package apifunctions
+package handlers
 
 import (
 	"github.com/gin-gonic/gin"
 	"net/http"
-	fileReader "randa/book-directory/book-data"
+	"randa/book-directory/storage"
 	"strconv"
 )
 
@@ -25,18 +25,18 @@ func GetAllBooks(c *gin.Context) {
 			return
 		}
 
-		if offset >= len(fileReader.Books) {
+		if offset >= len(storage.Books) {
 			c.IndentedJSON(http.StatusBadRequest, gin.H{"message": "Offset exceeds available books"})
 			return
 		}
 
-		if offset+limit > len(fileReader.Books) {
+		if offset+limit > len(storage.Books) {
 			c.IndentedJSON(http.StatusBadRequest, gin.H{"message": " limit should't exceed the length books store has"})
 		}
 
-		slicedObjects := fileReader.Books[offset : offset+limit]
+		slicedObjects := storage.Books[offset : offset+limit]
 		c.IndentedJSON(http.StatusOK, slicedObjects)
 	} else {
-		c.IndentedJSON(http.StatusOK, fileReader.Books)
+		c.IndentedJSON(http.StatusOK, storage.Books)
 	}
 }

@@ -1,9 +1,9 @@
-package apifunctions
+package handlers
 
 import (
 	"net/http"
-	fileReader "randa/book-directory/book-data"
 	"randa/book-directory/interfaces"
+	"randa/book-directory/storage"
 	"strings"
 	"sync"
 
@@ -22,7 +22,7 @@ func SearchBook(c *gin.Context) {
 	results := make(chan interfaces.BookType)
 	var wg sync.WaitGroup
 
-	for _, b := range fileReader.Books {
+	for _, b := range storage.Books {
 		wg.Add(1)
 		go func(b interfaces.BookType) {
 			defer wg.Done()

@@ -1,9 +1,9 @@
-package apifunctions
+package handlers
 
 import (
 	"github.com/gin-gonic/gin"
 	"net/http"
-	fileReader "randa/book-directory/book-data"
+	"randa/book-directory/storage"
 )
 
 func GetBookById(c *gin.Context) {
@@ -14,7 +14,7 @@ func GetBookById(c *gin.Context) {
 		return
 	}
 
-	for _, findBook := range fileReader.Books {
+	for _, findBook := range storage.Books {
 		if findBook.BookID == id {
 			c.IndentedJSON(http.StatusOK, findBook)
 			return
