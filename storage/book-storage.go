@@ -1,4 +1,4 @@
-package fileReader
+package storage
 
 import (
 	"encoding/json"
@@ -16,7 +16,7 @@ func LoadBooksFromFile() {
 	workingDir, _ := os.Getwd()
 
 	// Construct the correct path
-	filePath := filepath.Join(workingDir, "book-data", "book-data.json")
+	filePath := filepath.Join(workingDir, "storage", "book-data.json")
 	file, err := os.Open(filePath)
 	if err != nil {
 		fmt.Println("Error opening file:", err)
